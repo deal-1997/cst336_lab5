@@ -17,7 +17,7 @@ app.get("/", async function(req, res){
            keyword = req.query.keyword;
        }
   
-       let apiUrl = 'ttps://images.unsplash.com/flagged/photo-1556047124-cd8579bd09b3?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjEwMzUxOH0';
+       let apiUrl = 'https://images.unsplash.com/flagged/photo-1556047124-cd8579bd09b3?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjEwMzUxOH0';
        let response = await fetch(apiUrl);
        let data = await response.json();
        
@@ -27,7 +27,6 @@ app.get("/", async function(req, res){
        }
     
        res.render("results", {"imageUrl": data[0].urls.small, "imageUrlArray":imageUrlArray});
-       
        
       });
       
@@ -40,11 +39,12 @@ app.get("/", async function(req, res){
        res.render("favorites", {"imageUrl": imageUrl, "rows":rows});
   });  
 });//getKeywords
-
-
-
 });
-app.listen(process.env.PORT, process.env.IP, function(){
+
+/*app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Express server is running...");
+});*/
+
+app.listen("8080", "127.0.0.1", function() { 
+    console.log("Running Express Server..."); 
 });
-    /*app.listen("8080", "127.0.0.1", function() { console.log("Running Express Server..."); */
