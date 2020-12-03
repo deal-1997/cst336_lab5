@@ -10,16 +10,17 @@ app.use(express.static("public"));
 //routes
 app.get("/", async function(req, res){
    
-      app.get("/search", async function(req, res){
-       
-       let keyword = "";
+   let apiUrl = 'https://images.unsplash.com/flagged/photo-1556047124-cd8579bd09b3?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjEwMzUxOH0';
+   let response = await fetch(apiUrl);
+   let data = await response.json();
+   res.render("index", {"imageUrl": data.urls.small});
+
+app.get("/search", async function(req, res){
+    
+    let keyword = "";
        if (req.query.keyword) {
            keyword = req.query.keyword;
        }
-  
-       let apiUrl = 'https://images.unsplash.com/flagged/photo-1556047124-cd8579bd09b3?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjEwMzUxOH0';
-       let response = await fetch(apiUrl);
-       let data = await response.json();
        
        let imageUrlArray = [];
        for (let i = 0; i < data.length; i++) {
