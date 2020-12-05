@@ -1,40 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="js/functions.js"></script>
-        <meta charset="utf-8">
-        <title> Image Search App </title>
-        <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet" type="text/css">
-        <style>
-            body {
-                background-image: url("https://images.unsplash.com/flagged/photo-1556047124-cd8579bd09b3?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1080&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjEwMzUxOH0")
-            }
-        </style>
-    </head>
-    
+<%- include('partials/header.ejs') %>
+ 
+   <body>
+       
+       <main>
+           
+         <h1> Cool Images </h1>
+         <form action="/search">
+         <input type="text" placeholder="Type keyword" name="keyword"/>
+         <br><br>
+         <burron>Search</burron>
+         </form>
+         <hr>
+         
+         <% imageUrlArray.forEach(function(imageUrl){ %>
+              <%- (i % 3 == 0)?'<br>':'' %>
+              <img src='<%= imageUrl %>' width='200' height='200' />
+              <img src="img/favoriteIcon" src='img/favoriteoff.png' width='20'>
+        <% }); %>
+         
         
-</head>
-    <body>
-        <main>
-        <h1>Cool Images</h1>
-        <form action="/search">
-            <input type="text" size="15" placeholder="Type keyword" name="keyword"/>
-            <br><br>
-            <button>
-                Search
-            </button>
-            <br><a href="/getKeywords"> See Favorites </a>
-        </form>
-        <hr>
-        
-        <% imageUrlArray.forEach(function(imageUrl, i){ %> 
-            <%- (i % 3 = 0)? '<br' : '' %>
-            <img src='<%= imageUrl %>' width = '200' height = '200' />
-            <img class ="favoriteon" src='img/favoriteon.png' width ='20'>
-        <% });%>
-        
+           
         </main>
-</body>
+       
+<%- include('partials/footer.ejs') %>  
+     
+    </body>
 </html>
