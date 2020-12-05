@@ -9,7 +9,7 @@ app.use(express.static("public"));
 //routes
 app.get("/", async function(req, res){
     
-    let apiUrl = 'https://api.unsplash.com/photos/random/?count=9&client_id=access_key&featured=true&orientation=landscape';
+    let apiUrl = 'https://api.unsplash.com/photos/random/?count=9&client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape';
     let response = await fetch(apiUrl);
     let data = await response.json();
     res.render("index", {"imageUrl": data.urls.small});
@@ -78,14 +78,9 @@ app.get("/getKeywords",  function(req, res) {
     
 });
 
-
-
-
-
-
-
-
 //starting server
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Express server is running...");
+    
+    /*app.listen("8080", "127.0.0.1", function() { console.log("Running Express Server..."); */
 });
