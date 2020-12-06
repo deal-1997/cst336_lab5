@@ -41,7 +41,7 @@ $(document).ready(function(){
 
     data.forEach(function(row){
     htmlString += "<img class='image' src='"+row.imageURL+"' width='200' height='200'>";
-    htmlString += "<img class='favoriteIcon' src='img/favorite_on.png' width='20'>";
+    htmlString += "<img class='favoriteIcon' src='img/favoriteon.png' width='20'>";
  });
  
 
@@ -55,7 +55,7 @@ $("#favorites").on("click", ".favoriteIcon", function(){
  let favorite = $(this).prev().attr("src");
         
  if ($(this).attr("src") == 'img/favorite.png'){             
-  $(this).attr("src","img/favorite_on.png");
+  $(this).attr("src","img/favoriteon.png");
   updateFavorite("add",favorite, $("#keywordSelected").val());
 } else {               
    $(this).attr("src","img/favorite.png");
