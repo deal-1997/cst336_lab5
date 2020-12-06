@@ -12,7 +12,7 @@ app.get("/", async function(req, res){
     let apiUrl = 'https://api.unsplash.com/photos/random/?client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape';
     let response = await fetch(apiUrl);
     let data = await response.json();
-    console.log(data);
+    //console.log(data);
     res.render("index", {"imageUrl": data.urls.small});
 });
 
@@ -27,8 +27,18 @@ app.get("/search", async function(req, res){
    let apiUrl = 'https://api.unsplash.com/photos/random/?client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape';
    let response = await fetch(apiUrl);
    let data = await response.json();
+   let imageUrlArray = [];
+   console.log("this is data[0]: " << data[0]);
+
+   for (let i = 0; i < data.length; i++) {
+     imageUrlArray.push(data[i].urls.small);   
+   }
+   res.render("results", {"imageUrl": data[0].urls.small, "imageUrlArray": imageUrlArray});
+
+});
+
    
-  app.get("/api/updateFavorites", function(req, res){
+app.get("/api/updateFavorites", function(req, res){
   let sql;
   let sqlParams;
   switch (req.query.action) {
@@ -41,7 +51,7 @@ app.get("/search", async function(req, res){
   }//switch
   pool.query(sql, sqlParams, function (err, rows, fields) {
     if (err) throw err;
-    console.log(rows);
+    //console.log(rows);
     res.send(rows.affectedRows.toString());
   });
     
@@ -57,34 +67,24 @@ app.get("/getKeywords",  function(req, res) {
   });  
 });//getKeywords
 
-   app.get("/api/getFavorites", function(req, res){
+app.get("/api/getFavorites", function(req, res){
    let sql = "SELECT imageURL FROM favorites WHERE keyword = ?";
    let sqlParams = [req.query.keyword];  
    pool.query(sql, sqlParams, function (err, rows, fields) {
     if (err) throw err;
-    console.log(rows);
+    //console.log(rows);
    res.send(rows);
   });
     
 });//api/getFavorites
 
 
-   let imageUrlArray = [];
-   for (let i = 0; i < data.length; i++) {
-     imageUrlArray.push(data[i].urls.small);   
-   }
-   
-   res.render("results", {"imageUrl": data[0].urls.small, "imageUrlArray": imageUrlArray});
-    
-    
-});
-
 //starting server
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("Express server is running...");
+/*app.listen(process.env.PORT, process.env.IP, function(){
+    console.log("Express server is running...");*/
     
-  /*app.listen("8080", "127.0.0.1", function() { console.log("Running Express Server...");*/
+  app.listen("8080", "127.0.0.1", function() { console.log("Running Express Server...");
 
 
       

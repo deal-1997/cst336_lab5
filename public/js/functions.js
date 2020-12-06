@@ -21,7 +21,7 @@ $(document).ready(function(){
            updateFavorite("delete",imageUrl);
        }
    
-    }); favoriteIcon
+    });
     
     async function updateFavorite(action, imageUrl, keyword) {
         let url = `/api/updateFavorites?action=${action}&imageUrl=${imageUrl}&keyword=${keyword}`;
@@ -32,7 +32,7 @@ $(document).ready(function(){
 
     let keyword =  $(this).html().trim(); 
     $("#keywordSelected").val(keyword);
-    let response = await  fetch(`/api/getFavorites?keyword=${keyword}`);
+    let response = await fetch(`/api/getFavorites?keyword=${keyword}`);
     let data = await response.json();
  
     $("#favorites").html("");
