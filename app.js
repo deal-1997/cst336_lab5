@@ -3,32 +3,34 @@ const app = express();
 const fetch = require("node-fetch");
 const pool = require("./dbPool.js");
 
-//routes
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-
-app.get("/", async function (req, res) {
-    let apiUrl = 'https://api.unsplash.com/photos/random/?count=9&client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape';
-    let response = await fetch (apiUrl);
-    let data = await response.json();
-    res.render("index", {"imageUrl": data.urls.small});
+//routes
+app.get("/", async function(req, res){
+      
+      let apiUrl = 'https://api.unsplash.com/photos/random/?client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape';
+      let response = await fetch(apiUrl);
+      let data = await response.json();
+      res.render("index", {"imageUrl": data.urls.small});
 });
 
-app.get("/search", async function (req, res) {
-    let keyword = "";
-    if (req.query.keyword) {
-        keyword = req.query.keyword;
-    }
-    let apiUrl = 'https://api.unsplash.com/photos/random/?count=9&client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape';
-    let response = await fetch (apiUrl);
-    let data = await response.json();
-    
-    let imageUrlArray = [];
-    for (let i = 0; i <data.length; i++) {
-        imageUrlArray.push(data[i].urls.small);
-    }
-    res.render("results", {"imageUrl": data[0].urls.small, "imageUrlArray":imageUrlArray});
-}); //search
+app.get("/search", async function(req, res){
+      let keyword = "";
+      if(req.query.keyword){
+            keyword = req.query.keyword;
+      }
+
+      let apiUrl = 'https://api.unsplash.com/photos/random/?count=9&client_id=ef5134711d47be3b51f2d6cb309ccde07f1acf1e9972b188a29a5fb9e1249c32&featured=true&orientation=landscape&query=${keyword}';
+      let response = await fetch(apiUrl);
+      let data = await response.json();
+      
+      let imageUrlArray = [];
+      for(let i = 0; i < data.length; i++) {
+            imageUrlArray.push(data[i].urls.small);
+      }
+      res.render("results", {"imageUrl": data[0].urls.small, "imageUrlArray":imageUrlArray});
+      
+});
 
 app.get("/api/updateFavorites", function(req, res){
   let sql;
@@ -49,8 +51,9 @@ app.get("/api/updateFavorites", function(req, res){
     
 });//api/updateFavorites
 
+
 app.get("/getKeywords",  function(req, res) {
-  let sql = "SELECT keyword FROM favorites GROUP BY keyword ORDER BY COUNT(*) DESC";
+  let sql = "SELECT DISTINCT keyword FROM favorites ORDER BY keyword";
   let imageUrl = ["img/favorite.png"];
   pool.query(sql, function (err, rows, fields) {
      if (err) throw err;
@@ -70,10 +73,12 @@ app.get("/api/getFavorites", function(req, res){
     
 });//api/getFavorites
 
+
 //starting server
 app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("Express server is running...");
-    
+      console.log("Express server is running...");
+      
 /*app.listen("8080", "127.0.0.1", function() { console.log("Running Express Server...");*/
 
+    
 });
