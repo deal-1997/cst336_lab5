@@ -1,53 +1,51 @@
-/* global $ */
-$(document).ready(function(){
+/*global $ */
+$(document).ready(function() {
     
-    /* Event when clicking on any favorite 
-    icon,icon swaps from empty to filled */
-    $(".favoriteIcon").on("click", function(){
-        
+    /* Event when clicking on any favorite icon
+    icon swaps from empty to filled */
+    $(".favoriteIcon").on("click", function() {
         
         let queryString = window.location.search;
-        let urlParams   = new URLSearchParams(queryString);
-        let keyword     = urlParams.get("keyword");
+        let urlParams = new URLSearchParams(queryString);
+        let keyword = urlParams.get("keyword");
         
         let imageUrl = $(this).prev().attr("src");
-       
-       if ($(this).attr("src") == "img/favoriteoff.png") {
-           $(this).attr("src","img/favoriteon.png");
-           updateFavorite("add", imageUrl, keyword);
-       }
-       else {
-           $(this).attr("src", "img/favoriteoff.png");
-           updateFavorite("delete",imageUrl);
-       }
-   
-    });
+        
+        if ($(this).attr("src") == "img/favorite.png") {
+            $(this).attr("src", "img/favoriteon.png");
+            updateFavorite("add", imageUrl, keyword);
+        }
+        else {
+            $(this).attr("src", "img/favorite.png");
+            updateFavorite("add", imageUrl, keyword);
+        }
+    }); //favoriteIcon
     
     async function updateFavorite(action, imageUrl, keyword) {
-        let url = `/api/updateFavorites?action=${action}&imageUrl=${imageUrl}&keyword=${keyword}`;
+        let url = `/api/updateFavorites?action=${action}&imageUrl=${imageUrl}&keyword=${keyword}`
         await fetch(url);
     }
     
-    $(".keywordLink").on("click", async function(){
+  $(".keywordLink").on("click", async function(){
 
-    let keyword =  $(this).html().trim(); 
-    $("#keywordSelected").val(keyword);
-    let response = await fetch(`/api/getFavorites?keyword=${keyword}`);
-    let data = await response.json();
+  let keyword =  $(this).html().trim(); 
+  $("#keywordSelected").val(keyword);
+  let response = await fetch(`/api/getFavorites?keyword=${keyword}`);
+
+  let data = await response.json();
  
-    $("#favorites").html("");
-    let htmlString = "";
+  $("#favorites").html("");
+  let htmlString = "";
 
-
-    data.forEach(function(row){
-    htmlString += "<img class='image' src='"+row.imageURL+"' width='200' height='200'>";
-    htmlString += "<img class='favoriteIcon' src='img/favoriteon.png' width='20'>";
+  data.forEach(function(row){
+   htmlString += "<img class='image' src='"+row.imageURL+"' width='200' height='200'>";
+   htmlString += "<img class='favoriteIcon' src='img/favoriteon.png' width='20'>";
  });
- 
 
  $("#favorites").append(htmlString);
  
 });//keywordLink
+
 
 //Event for dynamic content generated when clicking on a keyword    
 $("#favorites").on("click", ".favoriteIcon", function(){
@@ -63,11 +61,5 @@ $("#favorites").on("click", ".favoriteIcon", function(){
    }
 });//.favoriteIcon event listener
 
-    
-    
-    
-    
-    
-    
-    
+
 });
