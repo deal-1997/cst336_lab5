@@ -1,3 +1,4 @@
+/*global functions */
 $(document).ready(function() {
     $(".favoriteIcon").on("click", function() {
         let queryString = window.location.search;
