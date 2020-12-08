@@ -68,5 +68,4 @@ async function updateFavorite(action, imageUrl, keyword) {
     });//.favoriteIcon
 
     
-    
-});//ready
+});
