@@ -1,14 +1,14 @@
-<%- include('partials/header.ejs') %>
-<style>
-body {
-    background-repeat: repeat;
-    background-size: auto;
-}
-</style>
-<div id="favContainer">
-   <a class="link" href="/"> Back To Search </a>    
+    <style>
+        body{
+            background-repeat:repeat;
+            background-size: auto;
+        }
+    </style>
 
-<h1>Favorite Pics</h1>
+<div id = "favContainer">
+   <a class = "link" href="/"> Back to Search </a>
+    
+   <h1>Favorite Pics</h1>
     
    <% 
        //displaying five keywords per line
@@ -23,5 +23,5 @@ body {
     <div id="favorites"></div>
     
     <input type="hidden" id="keywordSelected">
-
+</div>
 <%- include('partials/footer.ejs') %>
